@@ -1,5 +1,3 @@
-# meeting_room_agent/app/db/seed.py - YAML 데이터로 빌딩/층/회의실 시드
-# YAML의 floor_id/room_id는 건물별로 중복될 수 있으므로, DB에는 전역 유일 ID 부여
 from sqlalchemy import func, select
 
 from app.db.models import Building, Floor, Room
@@ -13,11 +11,9 @@ def seed_if_empty():
         if session.scalar(select(func.count()).select_from(Building)) > 0:
             return
         building_ids, floor_ids = load_building_data()
-        # Buildings (YAML id 유지)
         for name, bid in building_ids.items():
             session.add(Building(id=bid, name=name))
         session.flush()
-        # Floors & Rooms: 전역 유일 ID 사용 (YAML id는 건물 간 중복 가능)
         floor_pk = 1
         room_pk = 1
         for building_id, floors in floor_ids.items():

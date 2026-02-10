@@ -1,5 +1,3 @@
-# meeting_room_agent/app/graph/nodes.py - LangGraph 노드 정의
-
 from datetime import datetime
 
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -25,7 +23,6 @@ def init_node(state: AgentState) -> AgentState:
 
 def router_node(state: AgentState) -> AgentState:
     today = datetime.now().strftime("%Y-%m-%d")
-    # 1단계: 의도만 분류
     route_system = _prompt_manager.get("router_intent")
     out = llm.with_structured_output(RouteOut, method="function_calling").invoke(
         [SystemMessage(content=route_system), HumanMessage(content=state["query"])]
@@ -35,7 +32,6 @@ def router_node(state: AgentState) -> AgentState:
     state["need_more"] = out.need_more
     state["ask_user"] = out.ask_user or ""
 
-    # 2단계: Book/Check는 전용 스키마로 슬롯 추출 (한글 쿼리 → 영어 키 보장)
     if out.intent == "Book":
         extract_system = _prompt_manager.get("book_slots_extract", today=today)
         try:

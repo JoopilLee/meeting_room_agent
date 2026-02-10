@@ -1,5 +1,3 @@
-# meeting_room_agent/app/tools/schemas.py - 도구 입력 Pydantic 스키마
-
 from typing import Optional, Union
 
 from pydantic import BaseModel, Field, field_validator

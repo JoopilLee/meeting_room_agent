@@ -1,7 +1,6 @@
-# meeting_room_agent/app/db/models.py - SQLAlchemy 모델
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
+from sqlalchemy import DateTime, ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -12,7 +11,7 @@ class Base(DeclarativeBase):
 class Building(Base):
     __tablename__ = "buildings"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=False)  # YAML 시드 ID 유지
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=False)
     name: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
 
     floors: Mapped[list["Floor"]] = relationship("Floor", back_populates="building")
@@ -21,7 +20,7 @@ class Building(Base):
 class Floor(Base):
     __tablename__ = "floors"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=False)  # YAML 시드 ID 유지
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=False)
     building_id: Mapped[int] = mapped_column(Integer, ForeignKey("buildings.id"), nullable=False)
     floor_number: Mapped[int] = mapped_column(Integer, nullable=False)
 
@@ -34,7 +33,7 @@ class Floor(Base):
 class Room(Base):
     __tablename__ = "rooms"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=False)  # YAML 시드 ID 유지
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=False)
     floor_id: Mapped[int] = mapped_column(Integer, ForeignKey("floors.id"), nullable=False)
     name: Mapped[str] = mapped_column(String(50), nullable=False)
 

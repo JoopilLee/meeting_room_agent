@@ -1,4 +1,4 @@
-# meeting_room_agent - 회의실 예약 에이전트 (LangGraph + PostgreSQL)
+# meeting_room_agent - 회의실 예약 에이전트
 FROM python:3.11-slim
 
 WORKDIR /app

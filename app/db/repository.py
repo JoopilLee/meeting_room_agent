@@ -1,5 +1,4 @@
-# meeting_room_agent/app/db/repository.py - 빌딩/예약 DB 조회·저장
-from datetime import date, datetime
+from datetime import date, datetime, time, timedelta
 from typing import Any, Dict, List, Optional
 
 from sqlalchemy import and_, select
@@ -47,11 +46,16 @@ def db_get_room_reservations(
                 Reservation.room_id == room_id,
             )
         )
+        if day is not None:
+            start_d = datetime.combine(day, datetime.min.time())
+            end_d = start_d + timedelta(days=1)
+            q = q.where(
+                Reservation.start_datetime < end_d,
+                Reservation.end_datetime > start_d,
+            )
         rows = session.execute(q).unique().scalars().all()
         out = []
         for r in rows:
-            if day and r.start_datetime.date() != day:
-                continue
             out.append({
                 "reservation_id": r.reservation_id,
                 "building_id": r.building_id,
@@ -139,7 +143,6 @@ def db_delete_reservation(reservation_id: str) -> bool:
 
 
 def db_update_reservation(reservation_id: str, **kwargs: Any) -> Optional[Reservation]:
-    """업데이트할 레코드 반환 (세션 내). 호출 측에서 commit. 실제로는 get_session이 commit하므로 별도 세션에서 조회 후 수정."""
     with get_session() as session:
         r = session.execute(select(Reservation).where(Reservation.reservation_id == reservation_id)).unique().scalars().one_or_none()
         if not r:
@@ -154,7 +157,6 @@ def db_update_reservation(reservation_id: str, **kwargs: Any) -> Optional[Reserv
 def db_get_user_reservations(
     user_name: str, start_day: date, end_day: date, building_id_filter: Optional[int] = None
 ) -> List[Dict[str, Any]]:
-    from datetime import time
     start_begin = datetime.combine(start_day, time(0, 0))
     end_inclusive = datetime.combine(end_day, time(23, 59, 59))
     with get_session() as session:

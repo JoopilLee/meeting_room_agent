@@ -1,5 +1,3 @@
-# meeting_room_agent/app/graph/workflow.py - 회의실 에이전트 LangGraph 워크플로우
-
 from langgraph.graph import END, START, StateGraph
 
 from app.core.state import AgentState
@@ -18,7 +16,6 @@ def _route_after_router(state: AgentState) -> str:
 
 
 def get_agent():
-    """회의실 에이전트 그래프를 컴파일해 에이전트 인스턴스를 반환합니다."""
     graph = StateGraph(AgentState)
     graph.add_node("Init", init_node)
     graph.add_node("Router", router_node)

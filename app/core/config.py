@@ -1,11 +1,9 @@
-# meeting_room_agent/app/core/config.py - 환경 변수 및 LLM 설정
 import os
 from pathlib import Path
 
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 
-# .env 로드: 프로젝트 루트 (meeting_room_agent 또는 Docker /app)
 _root_app = Path(__file__).resolve().parent.parent.parent
 _env_path = _root_app / ".env"
 if _env_path.exists():

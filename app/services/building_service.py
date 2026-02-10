@@ -1,5 +1,3 @@
-# meeting_room_agent/app/services/building_service.py - 빌딩/층/회의실 조회 및 ID 해석 (DB)
-
 from typing import Union
 
 from app.db.repository import db_get_building_ids, db_get_floor_ids, db_get_rooms

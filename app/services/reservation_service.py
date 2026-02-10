@@ -1,5 +1,3 @@
-# meeting_room_agent/app/services/reservation_service.py - 예약 CRUD, 시간 겹침/빈 슬롯 (DB)
-
 from datetime import datetime, date
 
 from app.db.repository import (
@@ -61,8 +59,7 @@ def cancel_reservation(reservation_id):
 
 
 def get_room_reservations(building_id, floor_id, room_id, date=None):
-    raw = db_get_room_reservations(building_id, floor_id, room_id, day=date)
-    return [{"reservation_id": r["reservation_id"], **r} for r in raw]
+    return db_get_room_reservations(building_id, floor_id, room_id, day=date)
 
 
 def update_reservation(reservation_id, **kwargs):
@@ -147,5 +144,4 @@ def suggest_same_room_slots(b_id: int, f_id: int, r_id: int, req_start: datetime
 
 
 def get_user_reservations_list(user_name: str, start_day: date, end_day: date, building_id_filter=None):
-    """내 예약 목록 (도구용). 반환: [{"reservation_id", "building_id", "floor_id", "room_id", "title", "purpose", "start", "end"}, ...]"""
     return db_get_user_reservations(user_name, start_day, end_day, building_id_filter)

@@ -1,4 +1,3 @@
-# meeting_room_agent/app/db/session.py - 엔진 및 세션
 from contextlib import contextmanager
 from typing import Generator
 
@@ -32,7 +31,6 @@ def get_session_factory():
 
 @contextmanager
 def get_session() -> Generator[Session, None, None]:
-    """DB 세션 컨텍스트 매니저. with get_session() as session: ..."""
     factory = get_session_factory()
     session = factory()
     try:
@@ -46,7 +44,6 @@ def get_session() -> Generator[Session, None, None]:
 
 
 def init_db():
-    """테이블 생성 및 필요 시 YAML 시드."""
     engine = get_engine()
     Base.metadata.create_all(bind=engine)
     from app.db.seed import seed_if_empty

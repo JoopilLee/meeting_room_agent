@@ -1,9 +1,3 @@
-# meeting_room_agent/server.py - Docker/로컬 API 서버 (회의실 에이전트 호출)
-"""
-사용법:
-  uvicorn server:app --host 0.0.0.0 --port 8000
-  curl -X POST http://localhost:8000/run -H "Content-Type: application/json" -d '{"query": "에펠탑 17층 비었어?"}'
-"""
 import sys
 from pathlib import Path
 

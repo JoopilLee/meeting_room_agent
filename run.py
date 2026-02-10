@@ -1,16 +1,9 @@
-# meeting_room_agent/run.py - 회의실 에이전트 실행 스크립트
-"""
-사용법 (meeting_room_agent 디렉터리에서):
-  python run.py
-  python run.py "에펠탑 17층 1702-A 오늘 15:00~16:00 비었어?"
-"""
 import sys
 from pathlib import Path
 
-# 스크립트 디렉터리(meeting_room_agent)를 path에 넣어 app 패키지 인식
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import app.core.config  # noqa: F401 - .env 로드
+import app.core.config  # noqa: F401
 from app.core.config import check_env_set
 from app.db.session import init_db
 from app.graph.workflow import get_agent

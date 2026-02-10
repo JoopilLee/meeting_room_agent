@@ -1,5 +1,3 @@
-# meeting_room_agent/app/tools/tools.py - 회의실 예약 도구 정의
-
 from typing import Any, Dict, List, Optional, Union
 
 from langchain_core.tools import tool
