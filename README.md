@@ -25,36 +25,24 @@
 
 ## 실행
 
-### Docker (권장)
-
 ```bash
 docker-compose up --build
+```
+
+### Hot reload 개발 모드 (`reload.sh`)
+코드 수정 시 backend 자동 반영 + `.env`의 `OPENAI_MODEL` override 적용.
+
+```bash
+./reload.sh                    # 포그라운드 실행 (기본)
+./reload.sh up --build -d      # 빌드 후 백그라운드
+./reload.sh --build -d        # up 생략 가능
+./reload.sh down              # 종료
+./reload.sh restart --build -d # 재빌드 후 실행
 ```
 
 - **DB**: `localhost:5432`
 - **Backend API**: `http://localhost:8001` (health: `/health`, 에이전트: `POST /run`)
 - **Frontend**: `http://localhost:3000` (브라우저에서 접속, `/api`는 backend로 프록시)
-
-### 로컬 개발
-
-**Backend**
-
-```bash
-cd backend
-pip install -r requirements.txt
-# .env는 프로젝트 루트 또는 backend/ 에 두고
-uvicorn server:app --reload --host 0.0.0.0 --port 8000
-```
-
-**Frontend**
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-브라우저에서 `http://localhost:5173` 접속. Vite가 `/api`를 `localhost:8000`으로 프록시합니다.
 
 ## 예시 쿼리
 

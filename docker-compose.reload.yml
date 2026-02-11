@@ -1,0 +1,15 @@
+# Hot reload + 모델 override (reload.sh 전용)
+# .env에 OPENAI_MODEL=원하는모델 설정 시 override 적용
+
+services:
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/data:/app/data
+    environment:
+      DB_HOST: db
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    command: ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    entrypoint: ["/docker-entrypoint.sh"]

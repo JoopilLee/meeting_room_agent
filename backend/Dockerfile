@@ -18,3 +18,4 @@ EXPOSE 8000
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
