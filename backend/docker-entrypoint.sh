@@ -28,14 +28,17 @@ except Exception:
   done
 fi
 
-echo "Initializing database..."
+echo "Running database migrations..."
+alembic upgrade head
+
+echo "Seeding database if empty..."
 python -c "
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path('.').resolve()))
 from app.db.session import init_db
 init_db()
-print('Database initialized.')
+print('Database ready.')
 "
 
 exec "$@"

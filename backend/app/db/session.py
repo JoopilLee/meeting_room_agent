@@ -44,7 +44,7 @@ def get_session() -> Generator[Session, None, None]:
 
 
 def init_db():
+    """Create tables and seed. Use alembic upgrade head for schema management."""
     engine = get_engine()
-    Base.metadata.create_all(bind=engine)
     from app.db.seed import seed_if_empty
     seed_if_empty()

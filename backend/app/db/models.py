@@ -35,7 +35,7 @@ class Room(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=False)
     floor_id: Mapped[int] = mapped_column(Integer, ForeignKey("floors.id"), nullable=False)
-    name: Mapped[str] = mapped_column(String(50), nullable=False)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
 
     __table_args__ = (UniqueConstraint("floor_id", "name", name="uq_room_floor_name"),)
 
@@ -53,7 +53,8 @@ class Reservation(Base):
     room_id: Mapped[int] = mapped_column(Integer, ForeignKey("rooms.id"), nullable=False)
     user_name: Mapped[str] = mapped_column(String(100), nullable=False)
     purpose: Mapped[str] = mapped_column(String(200), default="")
-    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    title: Mapped[str] = mapped_column(String(200), nullable=False) 
+    notes: Mapped[str] = mapped_column(String(500), nullable=False)
     start_datetime: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     end_datetime: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 
